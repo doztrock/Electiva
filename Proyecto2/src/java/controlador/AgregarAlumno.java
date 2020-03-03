@@ -5,7 +5,9 @@
  */
 package controlador;
 
+import entidad.Alumno;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,13 +15,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import modelo.Servicio;
 
 /**
  *
- * @author Estudiante
+ * @author Ivan
  */
-@WebServlet(name = "Servlet", urlPatterns = {"/Servlet"})
-public class Servlet extends HttpServlet {
+@WebServlet(name = "AgregarAlumno", urlPatterns = {"/AgregarAlumno"})
+public class AgregarAlumno extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -27,27 +30,29 @@ public class Servlet extends HttpServlet {
      *
      * @param request servlet request
      * @param response servlet response
-     * @throws javax.servlet.ServletException
-     * @throws java.io.IOException
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-/*
-        double A = Double.parseDouble(request.getParameter("A"));
-        double B = Double.parseDouble(request.getParameter("B"));
-        double C = Double.parseDouble(request.getParameter("C"));
+        // Se obtienen los parametros
+        request.getParameter("parametro");
 
-        calculadora.setA(A);
-        calculadora.setB(B);
-        calculadora.setC(C);
+        // Se llama al modelo
+        Servicio servicio = new Servicio();
+        Alumno alumno = new Alumno(1, "2", 3);
 
+        servicio.agregarAlumno(alumno);
+
+        // Guardamos
         HttpSession session = request.getSession();
-        session.setAttribute("Positivo", calculadora.calcularPositivo());
-        session.setAttribute("Negativo", calculadora.calcularNegativo());
-
-        RequestDispatcher view = request.getRequestDispatcher("index.jsp");
-        view.forward(request, response);
-*/
+        session.setAttribute("Attributo", "informacion");
+        
+        // Regresamos
+        RequestDispatcher vista = request.getRequestDispatcher("agregarAlumno.jsp");
+        vista.forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -1,7 +1,6 @@
 package controller;
 
 import connection.Database;
-import entity.Student;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -10,6 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.StudentService;
+import configuration.Configuration;
+import entity.Student;
+import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "StudentServlet", urlPatterns = {"/StudentServlet"})
 public class StudentServlet extends HttpServlet {
@@ -27,21 +31,42 @@ public class StudentServlet extends HttpServlet {
             throws ServletException, IOException {
 
         PrintWriter out = response.getWriter();
-        Database database = new Database("127.0.0.1", "user", "password", "universidad");
 
-        if (database.connect() == false) {
-            out.print("ERROR");
+        Database database;
+        StudentService studentService;
+
+        HttpSession session;
+        RequestDispatcher view;
+        String action;
+
+        database = new Database(Configuration.DATABASE_HOST, Configuration.DATABASE_USER, Configuration.DATABASE_PASSWORD, Configuration.DATABASE_NAME);
+
+        if (database.connect()) {
+
+            studentService = new StudentService(database);
+
+            session = request.getSession();
+            action = (request.getParameter("action") != null) ? request.getParameter("action") : "";
+
+            switch (action) {
+
+                default:
+
+                    ArrayList<Student> list = studentService.getStudent();
+
+                    session.setAttribute("ERROR", "Mensaje");
+                    session.setAttribute("ERROR_MESSAGE", "");
+
+                    session.setAttribute("RESULT", list);
+
+                    view = request.getRequestDispatcher("student.jsp");
+                    view.forward(request, response);
+
+                    break;
+
+            }
+
         }
-
-        StudentService studentService = new StudentService(database);
-
-        Student student = new Student();
-        
-        student.setCode(9);
-        student.setName("Prueba");
-        student.setSemester(10);
-        
-        out.println(studentService.addStudent(student));
 
     }
 

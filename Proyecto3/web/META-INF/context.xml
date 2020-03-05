@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/Proyecto 3"/>
+<Context path="/proyecto">
+    <Manager pathname="" />
+</Context>

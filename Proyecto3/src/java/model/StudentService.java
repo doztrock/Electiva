@@ -1,10 +1,10 @@
 package model;
 
+import java.sql.*;
+import java.util.*;
+
 import connection.Database;
 import entity.Student;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class StudentService {
 

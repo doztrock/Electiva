@@ -1,18 +1,15 @@
 package controller;
 
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.annotation.*;
+import javax.servlet.http.*;
+import java.util.*;
+
 import connection.Database;
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import model.StudentService;
 import configuration.Configuration;
 import entity.Student;
-import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.HttpSession;
+import model.StudentService;
 
 @WebServlet(name = "StudentServlet", urlPatterns = {"/StudentServlet"})
 public class StudentServlet extends HttpServlet {

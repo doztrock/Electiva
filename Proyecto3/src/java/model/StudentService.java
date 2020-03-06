@@ -18,20 +18,27 @@ public class StudentService {
 
         ArrayList<Student> list = new ArrayList<>();
 
-        String query = "SELECT * FROM alumno";
-        ResultSet result = (ResultSet) this.database.execute(query);
+        String query;
+        ResultSet result;
 
         try {
 
+            query = String.format("SELECT * FROM alumno");
+            result = this.database.retrieve(query);
+
             while (result.next()) {
 
-                int code = result.getInt(1);
-                String name = result.getString(2);
-                int semester = result.getInt(3);
+                Student student = new Student();
 
-                list.add(new Student(code, name, semester));
+                student.setCode(result.getInt(1));
+                student.setName(result.getString(2));
+                student.setSemester(result.getInt(3));
+
+                list.add(student);
 
             }
+
+            return list;
 
         } catch (SQLException exception) {
             System.err.println(exception.getMessage());
@@ -40,24 +47,31 @@ public class StudentService {
         return list;
     }
 
-    public ArrayList<Student> getStudent(Student student) {
+    public ArrayList<Student> getStudent(Student information) {
 
         ArrayList<Student> list = new ArrayList<>();
 
-        String query = "SELECT * FROM alumno";
-        ResultSet result = (ResultSet) this.database.execute(query);
+        String query;
+        ResultSet result;
 
         try {
 
+            query = String.format("SELECT * FROM alumno WHERE alumno.codigo = %d", information.getCode());
+            result = this.database.retrieve(query);
+
             while (result.next()) {
 
-                int code = result.getInt(1);
-                String name = result.getString(2);
-                int semester = result.getInt(3);
+                Student student = new Student();
 
-                list.add(new Student(code, name, semester));
+                student.setCode(result.getInt(1));
+                student.setName(result.getString(2));
+                student.setSemester(result.getInt(3));
+
+                list.add(student);
 
             }
+
+            return list;
 
         } catch (SQLException exception) {
             System.err.println(exception.getMessage());

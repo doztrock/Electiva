@@ -5,32 +5,47 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Student</title>
+        <title>Alumno</title>
     </head>
     <body>
 
-        <%
-            /*
+        Listado
 
-            Object ERROR = session.getAttribute("ERROR");
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Nombre</th>
+                    <th>Semestre</th>
+                </tr>
+            </thead>
+            <tbody>
 
-            if (!(Boolean) ERROR) {
+                <%
+                    ArrayList<Student> RESULT = (ArrayList<Student>) session.getAttribute("RESULT");
+                    for (Student student : RESULT) {
+                %>
 
-                Object ACTION = session.getAttribute("ACTION");
-                Object RESULT = session.getAttribute("RESULT");
+                <tr>
 
-                if (((String) ACTION).equals("list")) {
+                    <td>
+                        <%= student.getCode()%>
+                    </td>
+                    <td>
+                        <%= student.getName()%>
+                    </td>
+                    <td>
+                        <%= student.getSemester()%>
+                    </td>
 
-                    for (Student student : ((ArrayList<Student>) RESULT)) {
-                        out.print(student.getCode());
-                        out.print("<br>");
+                </tr>
+
+                <%
                     }
+                %>
 
-                }
-            }
-
-             */
-        %>
+            </tbody>
+        </table>
 
     </body>
 </html>

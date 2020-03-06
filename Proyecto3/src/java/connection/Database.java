@@ -1,6 +1,7 @@
 package connection;
 
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -9,7 +10,6 @@ public class Database {
     public static final String CLASS_NAME = "com.mysql.jdbc.Driver";
 
     private java.sql.Connection link;
-    private Statement statement;
 
     private final String host;
     private final String user;
@@ -44,20 +44,46 @@ public class Database {
         return false;
     }
 
-    public Object execute(String query) {
+    public ResultSet retrieve(String query) {
 
-        Object result = null;
+        Statement statement;
+
+        ResultSet result = null;
         String type = query.toUpperCase().substring(0, 6);
 
         try {
 
-            this.statement = this.link.createStatement();
+            statement = this.link.createStatement();
+
+            if (type.equals("SELECT")) {
+                result = statement.executeQuery(query);
+            }
+
+            return result;
+
+        } catch (SQLException exception) {
+            System.err.println(exception.getMessage());
+        }
+
+        return result;
+    }
+
+    public int execute(String query) {
+
+        Statement statement;
+
+        int result = 0;
+        String type = query.toUpperCase().substring(0, 6);
+
+        try {
+
+            statement = this.link.createStatement();
 
             if (type.equals("UPDATE") || type.equals("INSERT") || type.equals("DELETE")) {
-                result = this.statement.executeUpdate(query);
-            } else if (type.equals("SELECT")) {
-                result = this.statement.executeQuery(query);
+                result = statement.executeUpdate(query);
             }
+
+            return result;
 
         } catch (SQLException exception) {
             System.err.println(exception.getMessage());

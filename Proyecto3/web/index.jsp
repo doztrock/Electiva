@@ -12,6 +12,9 @@
                 <td>
                     <a href="StudentServlet">Alumno</a>
                 </td>
+                <td>
+                    <a href="SelectCourseServlet">Curso</a>
+                </td>
             </tr>
         </table>
 

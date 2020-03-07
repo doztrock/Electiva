@@ -11,8 +11,8 @@ import configuration.Configuration;
 import entity.Course;
 import model.CourseService;
 
-@WebServlet(name = "CourseServlet", urlPatterns = {"/CourseServlet"})
-public class CourseServlet extends HttpServlet {
+@WebServlet(name = "SelectCourseServlet", urlPatterns = {"/SelectCourseServlet"})
+public class SelectCourseServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
 
@@ -22,44 +22,24 @@ public class CourseServlet extends HttpServlet {
         HttpSession session;
         RequestDispatcher view;
 
-        String action;
-
         database = new Database(Configuration.DATABASE_HOST, Configuration.DATABASE_USER, Configuration.DATABASE_PASSWORD, Configuration.DATABASE_NAME);
 
         if (database.connect()) {
 
-            action = ((request.getParameter("ACTION") == null) ? "SELECT" : request.getParameter("ACTION"));
-
             try {
 
-                switch (action) {
+                ArrayList<Course> list;
 
-                    case "INSERT":
-                        break;
+                courseService = new CourseService(database);
+                session = request.getSession();
 
-                    case "UPDATE":
-                    case "DELETE":
-                        break;
+                list = courseService.getCourse();
 
-                    case "SELECT":
-                    default:
+                session.setAttribute("ACTION", "SELECT");
+                session.setAttribute("RESULT", list);
 
-                        ArrayList<Course> list;
-
-                        courseService = new CourseService(database);
-                        session = request.getSession();
-
-                        list = courseService.getCourse();
-
-                        session.setAttribute("ACTION", action);
-                        session.setAttribute("RESULT", list);
-
-                        view = request.getRequestDispatcher("course.jsp");
-                        view.forward(request, response);
-
-                        break;
-
-                }
+                view = request.getRequestDispatcher("course.jsp");
+                view.forward(request, response);
 
             } catch (ServletException | IOException exception) {
                 System.err.println(exception.getMessage());

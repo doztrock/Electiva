@@ -4,62 +4,48 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
-import java.util.*;
 
 import connection.Database;
 import configuration.Configuration;
 import entity.Student;
 import model.StudentService;
 
-@WebServlet(name = "StudentServlet", urlPatterns = {"/StudentServlet"})
-public class StudentServlet extends HttpServlet {
+@WebServlet(name = "InsertStudentServlet", urlPatterns = {"/InsertStudentServlet"})
+public class InsertStudentServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
 
         Database database;
+        Student student;
         StudentService studentService;
 
         HttpSession session;
         RequestDispatcher view;
 
-        String action;
-
         database = new Database(Configuration.DATABASE_HOST, Configuration.DATABASE_USER, Configuration.DATABASE_PASSWORD, Configuration.DATABASE_NAME);
 
         if (database.connect()) {
 
-            action = ((request.getParameter("ACTION") == null) ? "SELECT" : request.getParameter("ACTION"));
-
             try {
 
-                switch (action) {
+                int result;
 
-                    case "INSERT":
-                        break;
+                studentService = new StudentService(database);
+                session = request.getSession();
 
-                    case "UPDATE":
-                    case "DELETE":
-                        break;
+                student = new Student();
 
-                    case "SELECT":
-                    default:
+                student.setCode(Integer.parseInt((request.getParameter("code") == null) ? "" : request.getParameter("code")));
+                student.setName(((request.getParameter("name") == null) ? "" : request.getParameter("name")));
+                student.setSemester(Integer.parseInt((request.getParameter("semester") == null) ? "" : request.getParameter("semester")));
 
-                        ArrayList<Student> list;
+                result = studentService.addStudent(student);
 
-                        studentService = new StudentService(database);
-                        session = request.getSession();
+                session.setAttribute("ACTION", "INSERT");
+                session.setAttribute("RESULT", result);
 
-                        list = studentService.getStudent();
-
-                        session.setAttribute("ACTION", action);
-                        session.setAttribute("RESULT", list);
-
-                        view = request.getRequestDispatcher("student.jsp");
-                        view.forward(request, response);
-
-                        break;
-
-                }
+                view = request.getRequestDispatcher("SelectStudentServlet");
+                view.forward(request, response);
 
             } catch (ServletException | IOException exception) {
                 System.err.println(exception.getMessage());

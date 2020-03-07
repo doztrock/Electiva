@@ -10,7 +10,7 @@
         <table>
             <tr>
                 <td>
-                    <a href="StudentServlet">Alumno</a>
+                    <a href="SelectStudentServlet">Alumno</a>
                 </td>
                 <td>
                     <a href="SelectCourseServlet">Curso</a>

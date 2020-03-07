@@ -8,16 +8,16 @@ import java.util.*;
 
 import connection.Database;
 import configuration.Configuration;
-import entity.Student;
-import model.StudentService;
+import entity.Course;
+import model.CourseService;
 
-@WebServlet(name = "StudentServlet", urlPatterns = {"/StudentServlet"})
-public class StudentServlet extends HttpServlet {
+@WebServlet(name = "CourseServlet", urlPatterns = {"/CourseServlet"})
+public class CourseServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
 
         Database database;
-        StudentService studentService;
+        CourseService courseService;
 
         HttpSession session;
         RequestDispatcher view;
@@ -44,17 +44,17 @@ public class StudentServlet extends HttpServlet {
                     case "SELECT":
                     default:
 
-                        ArrayList<Student> list;
+                        ArrayList<Course> list;
 
-                        studentService = new StudentService(database);
+                        courseService = new CourseService(database);
                         session = request.getSession();
 
-                        list = studentService.getStudent();
+                        list = courseService.getCourse();
 
                         session.setAttribute("ACTION", action);
                         session.setAttribute("RESULT", list);
 
-                        view = request.getRequestDispatcher("student.jsp");
+                        view = request.getRequestDispatcher("course.jsp");
                         view.forward(request, response);
 
                         break;

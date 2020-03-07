@@ -87,7 +87,7 @@ public class StudentService {
 
         return (int) result;
     }
-
+    /*
     public int updateStudent(Student student) {
 
         String query = String.format("UPDATE alumno SET alumno.nombre = '%s', alumno.semestre = %d WHERE alumno.codigo = %d", student.getName(), student.getSemester(), student.getCode());
@@ -103,5 +103,5 @@ public class StudentService {
 
         return (int) result;
     }
-
+     */
 }

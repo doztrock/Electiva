@@ -9,7 +9,7 @@
     </head>
     <body>
 
-        Listado de alumnos.
+        Listado de alumnos.<br><br>
 
         <table border="1">
             <thead>
@@ -46,6 +46,8 @@
 
             </tbody>
         </table>
+
+        <a href="insertStudent.jsp">Agregar</a>
 
     </body>
 </html>

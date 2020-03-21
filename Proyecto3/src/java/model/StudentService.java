@@ -14,7 +14,7 @@ public class StudentService {
         this.database = database;
     }
 
-    public ArrayList<Student> getStudent() {
+    public ArrayList<Student> select() {
 
         ArrayList<Student> list = new ArrayList<>();
 
@@ -47,7 +47,7 @@ public class StudentService {
         return list;
     }
 
-    public ArrayList<Student> getStudent(Student information) {
+    public ArrayList<Student> select(Student information) {
 
         ArrayList<Student> list = new ArrayList<>();
 
@@ -80,15 +80,15 @@ public class StudentService {
         return list;
     }
 
-    public int addStudent(Student student) {
+    public int insert(Student student) {
 
         String query = String.format("INSERT INTO alumno VALUES (%d, '%s', %d)", student.getCode(), student.getName(), student.getSemester());
         Object result = this.database.execute(query);
 
         return (int) result;
     }
-    /*
-    public int updateStudent(Student student) {
+
+    public int update(Student student) {
 
         String query = String.format("UPDATE alumno SET alumno.nombre = '%s', alumno.semestre = %d WHERE alumno.codigo = %d", student.getName(), student.getSemester(), student.getCode());
         Object result = this.database.execute(query);
@@ -96,12 +96,12 @@ public class StudentService {
         return (int) result;
     }
 
-    public int deleteStudent(Student student) {
+    public int delete(Student student) {
 
         String query = String.format("DELETE FROM alumno WHERE alumno.codigo = %d", student.getCode());
         Object result = this.database.execute(query);
 
         return (int) result;
     }
-     */
+
 }

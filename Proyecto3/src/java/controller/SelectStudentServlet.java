@@ -34,8 +34,6 @@ public class SelectStudentServlet extends HttpServlet {
                 session = request.getSession();
 
                 list = studentService.getStudent();
-
-                session.setAttribute("ACTION", "SELECT");
                 session.setAttribute("RESULT", list);
 
                 view = request.getRequestDispatcher("student.jsp");

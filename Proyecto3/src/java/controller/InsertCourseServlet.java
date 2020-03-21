@@ -42,8 +42,6 @@ public class InsertCourseServlet extends HttpServlet {
                 course.setCredits(Integer.parseInt((request.getParameter("credits") == null) ? "" : request.getParameter("credits")));
 
                 result = courseService.addCourse(course);
-
-                session.setAttribute("ACTION", "INSERT");
                 session.setAttribute("RESULT", result);
 
                 view = request.getRequestDispatcher("SelectCourseServlet");

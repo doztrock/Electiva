@@ -40,8 +40,6 @@ public class InsertStudentServlet extends HttpServlet {
                 student.setSemester(Integer.parseInt((request.getParameter("semester") == null) ? "" : request.getParameter("semester")));
 
                 result = studentService.addStudent(student);
-
-                session.setAttribute("ACTION", "INSERT");
                 session.setAttribute("RESULT", result);
 
                 view = request.getRequestDispatcher("SelectStudentServlet");

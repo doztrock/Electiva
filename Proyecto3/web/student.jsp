@@ -17,6 +17,7 @@
                     <th>Codigo</th>
                     <th>Nombre</th>
                     <th>Semestre</th>
+                    <th>Accion</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,6 +37,11 @@
                     </td>
                     <td>
                         <%= student.getSemester()%>
+                    </td>
+
+                    <td>
+                        <a href="PreUpdateStudentServlet?code=<%= student.getCode()%>">Editar</a>
+                        <a href="DeleteStudentServlet?code=<%= student.getCode()%>" onclick="return confirm('¿Seguro?')">Eliminar</a>
                     </td>
 
                 </tr>

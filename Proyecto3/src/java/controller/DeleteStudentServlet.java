@@ -4,19 +4,19 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
-import java.util.*;
 
 import connection.Database;
 import configuration.Configuration;
 import entity.Student;
 import model.StudentService;
 
-@WebServlet(name = "SelectStudentServlet", urlPatterns = {"/SelectStudentServlet"})
-public class SelectStudentServlet extends HttpServlet {
+@WebServlet(name = "DeleteStudentServlet", urlPatterns = {"/DeleteStudentServlet"})
+public class DeleteStudentServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
 
         Database database;
+        Student student;
         StudentService studentService;
 
         HttpSession session;
@@ -28,15 +28,19 @@ public class SelectStudentServlet extends HttpServlet {
 
             try {
 
-                ArrayList<Student> list;
+                int result;
 
                 studentService = new StudentService(database);
                 session = request.getSession();
 
-                list = studentService.select();
-                session.setAttribute("RESULT", list);
+                student = new Student();
 
-                view = request.getRequestDispatcher("student.jsp");
+                student.setCode(Integer.parseInt((request.getParameter("code") == null) ? "" : request.getParameter("code")));
+
+                result = studentService.delete(student);
+                session.setAttribute("RESULT", result);
+
+                view = request.getRequestDispatcher("SelectStudentServlet");
                 view.forward(request, response);
 
             } catch (ServletException | IOException exception) {
@@ -48,12 +52,14 @@ public class SelectStudentServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 

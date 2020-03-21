@@ -14,7 +14,7 @@ public class CourseService {
         this.database = database;
     }
 
-    public ArrayList<Course> getCourse() {
+    public ArrayList<Course> select() {
 
         ArrayList<Course> list = new ArrayList<>();
 
@@ -49,7 +49,7 @@ public class CourseService {
         return list;
     }
 
-    public ArrayList<Course> getCourse(Course information) {
+    public ArrayList<Course> select(Course information) {
 
         ArrayList<Course> list = new ArrayList<>();
 
@@ -84,28 +84,28 @@ public class CourseService {
         return list;
     }
 
-    public int addCourse(Course course) {
+    public int insert(Course course) {
 
         String query = String.format("INSERT INTO curso VALUES (%d, '%s', '%s', '%s', %d)", course.getCode(), course.getDescription(), course.getProgram(), course.getTeacher(), course.getCredits());
         Object result = this.database.execute(query);
 
         return (int) result;
     }
-    /*
-    public int updateCourse(Course course) {
 
-        String query = String.format("UPDATE curso SET curso.nombre = '%s', curso.semestre = %d WHERE curso.codigo = %d", course.getName(), course.getSemester(), course.getCode());
+    public int update(Course course) {
+
+        String query = String.format("UPDATE curso SET curso.descripcion = '%s', curso.programa = '%s', curso.profesor = '%s', curso.creditos = %d WHERE curso.codigo = %d", course.getDescription(), course.getProgram(), course.getTeacher(), course.getCredits(), course.getCode());
         Object result = this.database.execute(query);
 
         return (int) result;
     }
 
-    public int deleteCourse(Course course) {
+    public int delete(Course course) {
 
         String query = String.format("DELETE FROM curso WHERE curso.codigo = %d", course.getCode());
         Object result = this.database.execute(query);
 
         return (int) result;
     }
-     */
+
 }

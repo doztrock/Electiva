@@ -10,8 +10,8 @@ import configuration.Configuration;
 import entity.Course;
 import model.CourseService;
 
-@WebServlet(name = "InsertCourseServlet", urlPatterns = {"/InsertCourseServlet"})
-public class InsertCourseServlet extends HttpServlet {
+@WebServlet(name = "UpdateCourseServlet", urlPatterns = {"/UpdateCourseServlet"})
+public class UpdateCourseServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
 
@@ -41,7 +41,7 @@ public class InsertCourseServlet extends HttpServlet {
                 course.setTeacher(((request.getParameter("teacher") == null) ? "" : request.getParameter("teacher")));
                 course.setCredits(Integer.parseInt((request.getParameter("credits") == null) ? "" : request.getParameter("credits")));
 
-                result = courseService.insert(course);
+                result = courseService.update(course);
                 session.setAttribute("RESULT", result);
 
                 view = request.getRequestDispatcher("SelectCourseServlet");
@@ -56,12 +56,14 @@ public class InsertCourseServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 

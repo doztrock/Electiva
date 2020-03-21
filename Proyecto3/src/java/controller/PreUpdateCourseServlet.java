@@ -4,14 +4,15 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
+import java.util.*;
 
 import connection.Database;
 import configuration.Configuration;
 import entity.Course;
 import model.CourseService;
 
-@WebServlet(name = "InsertCourseServlet", urlPatterns = {"/InsertCourseServlet"})
-public class InsertCourseServlet extends HttpServlet {
+@WebServlet(name = "PreUpdateCourseServlet", urlPatterns = {"/PreUpdateCourseServlet"})
+public class PreUpdateCourseServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
 
@@ -28,7 +29,7 @@ public class InsertCourseServlet extends HttpServlet {
 
             try {
 
-                int result;
+                ArrayList<Course> list;
 
                 courseService = new CourseService(database);
                 session = request.getSession();
@@ -36,15 +37,11 @@ public class InsertCourseServlet extends HttpServlet {
                 course = new Course();
 
                 course.setCode(Integer.parseInt((request.getParameter("code") == null) ? "" : request.getParameter("code")));
-                course.setDescription(((request.getParameter("description") == null) ? "" : request.getParameter("description")));
-                course.setProgram(((request.getParameter("program") == null) ? "" : request.getParameter("program")));
-                course.setTeacher(((request.getParameter("teacher") == null) ? "" : request.getParameter("teacher")));
-                course.setCredits(Integer.parseInt((request.getParameter("credits") == null) ? "" : request.getParameter("credits")));
 
-                result = courseService.insert(course);
-                session.setAttribute("RESULT", result);
+                list = courseService.select(course);
+                session.setAttribute("RESULT", list);
 
-                view = request.getRequestDispatcher("SelectCourseServlet");
+                view = request.getRequestDispatcher("updateCourse.jsp");
                 view.forward(request, response);
 
             } catch (ServletException | IOException exception) {
@@ -56,12 +53,14 @@ public class InsertCourseServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 

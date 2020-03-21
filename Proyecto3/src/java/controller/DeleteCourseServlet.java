@@ -10,8 +10,8 @@ import configuration.Configuration;
 import entity.Course;
 import model.CourseService;
 
-@WebServlet(name = "InsertCourseServlet", urlPatterns = {"/InsertCourseServlet"})
-public class InsertCourseServlet extends HttpServlet {
+@WebServlet(name = "DeleteCourseServlet", urlPatterns = {"/DeleteCourseServlet"})
+public class DeleteCourseServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
 
@@ -36,12 +36,8 @@ public class InsertCourseServlet extends HttpServlet {
                 course = new Course();
 
                 course.setCode(Integer.parseInt((request.getParameter("code") == null) ? "" : request.getParameter("code")));
-                course.setDescription(((request.getParameter("description") == null) ? "" : request.getParameter("description")));
-                course.setProgram(((request.getParameter("program") == null) ? "" : request.getParameter("program")));
-                course.setTeacher(((request.getParameter("teacher") == null) ? "" : request.getParameter("teacher")));
-                course.setCredits(Integer.parseInt((request.getParameter("credits") == null) ? "" : request.getParameter("credits")));
 
-                result = courseService.insert(course);
+                result = courseService.delete(course);
                 session.setAttribute("RESULT", result);
 
                 view = request.getRequestDispatcher("SelectCourseServlet");
@@ -56,12 +52,14 @@ public class InsertCourseServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 

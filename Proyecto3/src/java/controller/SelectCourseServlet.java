@@ -33,7 +33,7 @@ public class SelectCourseServlet extends HttpServlet {
                 courseService = new CourseService(database);
                 session = request.getSession();
 
-                list = courseService.getCourse();
+                list = courseService.select();
                 session.setAttribute("RESULT", list);
 
                 view = request.getRequestDispatcher("course.jsp");

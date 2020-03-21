@@ -19,6 +19,7 @@
                     <th>Programa</th>
                     <th>Profesor</th>
                     <th>Creditos</th>
+                    <th>Accion</th>
                 </tr>
             </thead>
             <tbody>
@@ -44,6 +45,11 @@
                     </td>
                     <td>
                         <%= course.getCredits()%>
+                    </td>
+
+                    <td>
+                        <a href="PreUpdateCourseServlet?code=<%= course.getCode()%>">Editar</a>
+                        <a href="DeleteCourseServlet?code=<%= course.getCode()%>" onclick="return confirm('¿Seguro?')">Eliminar</a>
                     </td>
 
                 </tr>

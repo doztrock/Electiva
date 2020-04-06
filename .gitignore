@@ -9,3 +9,7 @@
 *.tar.gz
 *.rar
 hs_err_pid*
+/JSF/dist/
+/Proyecto1/dist/
+/Proyecto2/dist/
+/Proyecto3/dist/

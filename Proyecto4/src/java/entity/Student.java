@@ -17,6 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s")
+    , @NamedQuery(name = "Student.findByIdentificator", query = "SELECT s FROM Student s WHERE s.identificator = :identificator")
     , @NamedQuery(name = "Student.findByCode", query = "SELECT s FROM Student s WHERE s.code = :code")
     , @NamedQuery(name = "Student.findByName", query = "SELECT s FROM Student s WHERE s.name = :name")
     , @NamedQuery(name = "Student.findBySemester", query = "SELECT s FROM Student s WHERE s.semester = :semester")})
@@ -26,8 +27,11 @@ public class Student implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @Column(name = "identificator")
+    private Integer identificator;
+    @Basic(optional = false)
     @Column(name = "code")
-    private Integer code;
+    private int code;
     @Basic(optional = false)
     @Column(name = "name")
     private String name;
@@ -38,21 +42,30 @@ public class Student implements Serializable {
     public Student() {
     }
 
-    public Student(Integer code) {
-        this.code = code;
+    public Student(Integer identificator) {
+        this.identificator = identificator;
     }
 
-    public Student(Integer code, String name, int semester) {
+    public Student(Integer identificator, int code, String name, int semester) {
+        this.identificator = identificator;
         this.code = code;
         this.name = name;
         this.semester = semester;
     }
 
-    public Integer getCode() {
+    public Integer getIdentificator() {
+        return identificator;
+    }
+
+    public void setIdentificator(Integer identificator) {
+        this.identificator = identificator;
+    }
+
+    public int getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
+    public void setCode(int code) {
         this.code = code;
     }
 
@@ -75,7 +88,7 @@ public class Student implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (code != null ? code.hashCode() : 0);
+        hash += (identificator != null ? identificator.hashCode() : 0);
         return hash;
     }
 
@@ -86,7 +99,7 @@ public class Student implements Serializable {
             return false;
         }
         Student other = (Student) object;
-        if ((this.code == null && other.code != null) || (this.code != null && !this.code.equals(other.code))) {
+        if ((this.identificator == null && other.identificator != null) || (this.identificator != null && !this.identificator.equals(other.identificator))) {
             return false;
         }
         return true;
@@ -94,7 +107,7 @@ public class Student implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Student[ code=" + code + " ]";
+        return "entity.Student[ identificator=" + identificator + " ]";
     }
 
 }

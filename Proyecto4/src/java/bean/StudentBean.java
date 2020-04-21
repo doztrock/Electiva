@@ -35,7 +35,7 @@ public class StudentBean {
         this.list = list;
     }
 
-    public void load() {
+    public final void load() {
 
         EntityManagerFactory entityManagerFactory;
         EntityManager entityManager;
@@ -44,6 +44,63 @@ public class StudentBean {
         entityManager = entityManagerFactory.createEntityManager();
 
         this.list = new ArrayList<>(entityManager.createNamedQuery("Student.findAll", Student.class).getResultList());
+
+    }
+
+    public String create() {
+
+        EntityManagerFactory entityManagerFactory;
+        EntityManager entityManager;
+
+        entityManagerFactory = Persistence.createEntityManagerFactory("PU");
+        entityManager = entityManagerFactory.createEntityManager();
+
+        entityManager.getTransaction().begin();
+        entityManager.persist(this.getStudent());
+        entityManager.getTransaction().commit();
+
+        load();
+
+        return "student.xhtml";
+    }
+
+    public String edit(Student student) {
+        this.setStudent(student);
+        return "student.edit.form.xhtml";
+    }
+
+    public String edit() {
+
+        EntityManagerFactory entityManagerFactory;
+        EntityManager entityManager;
+
+        entityManagerFactory = Persistence.createEntityManagerFactory("PU");
+        entityManager = entityManagerFactory.createEntityManager();
+
+        entityManager.find(Student.class, this.getStudent().getIdentificator());
+
+        entityManager.getTransaction().begin();
+        entityManager.merge(this.getStudent());
+        entityManager.getTransaction().commit();
+
+        load();
+
+        return "student.xhtml";
+    }
+
+    public void delete(Student student) {
+
+        EntityManagerFactory entityManagerFactory;
+        EntityManager entityManager;
+
+        entityManagerFactory = Persistence.createEntityManagerFactory("PU");
+        entityManager = entityManagerFactory.createEntityManager();
+
+        entityManager.getTransaction().begin();
+        entityManager.remove(entityManager.find(Student.class, student.getIdentificator()));
+        entityManager.getTransaction().commit();
+
+        load();
 
     }
 

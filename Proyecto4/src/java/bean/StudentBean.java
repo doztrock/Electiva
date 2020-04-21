@@ -16,7 +16,7 @@ public class StudentBean {
     private ArrayList<Student> list = new ArrayList<>();
 
     public StudentBean() {
-        this.load();
+        this.read();
     }
 
     public Student getStudent() {
@@ -35,18 +35,6 @@ public class StudentBean {
         this.list = list;
     }
 
-    public final void load() {
-
-        EntityManagerFactory entityManagerFactory;
-        EntityManager entityManager;
-
-        entityManagerFactory = Persistence.createEntityManagerFactory("PU");
-        entityManager = entityManagerFactory.createEntityManager();
-
-        this.list = new ArrayList<>(entityManager.createNamedQuery("Student.findAll", Student.class).getResultList());
-
-    }
-
     public String create() {
 
         EntityManagerFactory entityManagerFactory;
@@ -59,17 +47,29 @@ public class StudentBean {
         entityManager.persist(this.getStudent());
         entityManager.getTransaction().commit();
 
-        load();
+        read();
 
         return "student.xhtml";
     }
 
-    public String edit(Student student) {
+    public final void read() {
+
+        EntityManagerFactory entityManagerFactory;
+        EntityManager entityManager;
+
+        entityManagerFactory = Persistence.createEntityManagerFactory("PU");
+        entityManager = entityManagerFactory.createEntityManager();
+
+        this.list = new ArrayList<>(entityManager.createNamedQuery("Student.findAll", Student.class).getResultList());
+
+    }
+
+    public String update(Student student) {
         this.setStudent(student);
         return "student.edit.form.xhtml";
     }
 
-    public String edit() {
+    public String update() {
 
         EntityManagerFactory entityManagerFactory;
         EntityManager entityManager;
@@ -83,7 +83,7 @@ public class StudentBean {
         entityManager.merge(this.getStudent());
         entityManager.getTransaction().commit();
 
-        load();
+        read();
 
         return "student.xhtml";
     }
@@ -100,7 +100,7 @@ public class StudentBean {
         entityManager.remove(entityManager.find(Student.class, student.getIdentificator()));
         entityManager.getTransaction().commit();
 
-        load();
+        read();
 
     }
 

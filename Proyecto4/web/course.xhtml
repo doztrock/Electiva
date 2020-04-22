@@ -1,12 +1,74 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Curso</title>
     </h:head>
     <h:body>
-        Hello from Facelets
+
+        <h:link value="/Volver" outcome="index.xhtml" />
+        <br/><br/>
+
+        <h:dataTable value="#{courseBean.list}" var="course">
+
+            <h:column>
+                <f:facet name="header">Codigo</f:facet>
+            </h:column>
+
+            <h:column>
+                #{course.code}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Descripcion</f:facet>
+            </h:column>
+
+            <h:column>
+                #{course.description}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Programa</f:facet>
+            </h:column>
+
+            <h:column>
+                #{course.program}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Profesor</f:facet>
+            </h:column>
+
+            <h:column>
+                #{course.teacher}
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Creditos</f:facet>
+            </h:column>
+
+            <h:column>
+                #{course.credits}
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Accion</f:facet>
+            </h:column>
+
+            <h:column>
+                <h:form>
+                    <h:commandButton value="Editar" action="#{courseBean.update(course)}" />
+                    <h:commandButton value="Eliminar" actionListener="#{courseBean.delete(course)}" />
+                </h:form>
+            </h:column>
+
+        </h:dataTable>
+
+        <h:form>
+            <h:commandButton value="Crear" action="course.create.form.xhtml" />
+        </h:form>
+
     </h:body>
 </html>
-

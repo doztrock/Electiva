@@ -3,6 +3,7 @@
   <persistence-unit name="PU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>entity.Student</class>
+    <class>entity.Course</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://rds.jmsoft.co:3306/universitydb?zeroDateTimeBehavior=convertToNull"/>

@@ -8,23 +8,42 @@
     </h:head>
     <h:body>
 
+        <h:link value="/Volver" outcome="index.xhtml" />
+
+        <br/><br/>
+
         <h:form>
-            <h:dataTable value="#{studentBean.studentList()}" var="student" cellpadding="2" cellspacing="1" border="1">
-
-                <h:column>
-                    <h:outputLabel value="#{student.code}"></h:outputLabel>
-                </h:column>
-
-                <h:column>
-                    <h:outputLabel value="#{student.name}"></h:outputLabel>
-                </h:column>
-
-                <h:column>
-                    <h:outputLabel value="#{student.semester}"></h:outputLabel>
-                </h:column>
-
-            </h:dataTable>
+            <h:commandButton value="Crear" action="student.create.form.xhtml" />
         </h:form>
+
+        <br/><br/>
+
+        <h:dataTable value="#{studentBean.read()}" var="student" cellpadding="2" cellspacing="1" border="1">
+
+            <h:column>
+                <f:facet name="header">Codigo</f:facet>
+                <h:outputLabel value="#{student.code}"></h:outputLabel>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Nombre</f:facet>
+                <h:outputLabel value="#{student.name}"></h:outputLabel>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Semestre</f:facet>
+                <h:outputLabel value="#{student.semester}"></h:outputLabel>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Opciones</f:facet>
+                <h:form>
+                    <h:commandButton value="Editar" action="#{studentBean.update(student)}" />
+                    <h:commandButton value="Eliminar" actionListener="#{studentBean.delete(student)}" />
+                </h:form>
+            </h:column>
+
+        </h:dataTable>
 
     </h:body>
 </html>

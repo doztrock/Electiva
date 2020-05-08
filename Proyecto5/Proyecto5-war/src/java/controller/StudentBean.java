@@ -22,6 +22,7 @@ public class StudentBean {
 
     @EJB
     private StudentFacade studentFacade;
+    private Student student = new Student();
 
     /**
      * Creates a new instance of StudentBean
@@ -29,8 +30,35 @@ public class StudentBean {
     public StudentBean() {
     }
 
-    public List<Student> studentList() {
-        return studentFacade.findAll();
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public String create() {
+        this.studentFacade.create(this.student);
+        return "student.xhtml";
+    }
+
+    public List<Student> read() {
+        return this.studentFacade.findAll();
+    }
+
+    public String update(Student student) {
+        this.student = student;
+        return "student.update.form.xhtml";
+    }
+
+    public String update() {
+        this.studentFacade.edit(this.student);
+        return "student.xhtml";
+    }
+
+    public void delete(Student student) {
+        this.studentFacade.remove(student);
     }
 
 }
